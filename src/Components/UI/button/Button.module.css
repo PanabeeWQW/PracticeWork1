@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Jost:wght@200;600&family=Kanit:wght@500&family=Raleway:ital,wght@0,500;0,700;1,500&family=Roboto&display=swap');
+
+.Btn {
+    margin-top: 20px;
+    width: auto;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    background: var(--purple, #6C63FF);
+    border: none;
+    font-family: 'Kanit';
+    font-size: 18px;
+    color: var(--white, #F7F7F7);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%; /* 18px */
+    text-transform: uppercase;
+}
