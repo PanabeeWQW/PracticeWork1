@@ -1,44 +1,67 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './styles/App.css';
 import PostList from './Components/PostList';
-import Button from './Components/UI/button/Button';
+import PostForm from './Components/PostForm';
+import Select from './Components/UI/select/Select';
 import Input from './Components/UI/input/Input';
 
 function App() {
   const [posts, setPosts] = useState([
-    { id: 1, title: 'JavaScript', description: 'Description' },
-    { id: 2, title: 'JavaScript2', description: 'Description' },
-    { id: 3, title: 'JavaScript3', description: 'Description' },
+    { id: 1, title: 'в', description: '1' },
+    { id: 2, title: 'б', description: '2' },
+    { id: 3, title: 'а', description: '3' },
   ]);
 
-  const [post, setPost] = useState({ title: '', description: '' });
+  const [selectedSort, setSelectedSort] = useState('');
+  const [searchQuary, setSearchQuery] = useState('');
 
-  const addNewPost = () => {
-    setPosts([...posts, { ...post, id: Date.now() }]);
-    setPost({ title: '', description: '' });
+  const sortedPosts = useMemo(() => {
+    console.log('Функция отработала');
+    if (selectedSort) {
+      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]))
+    }
+    return posts;
+  },[selectedSort, posts]);
+
+  const sortedAndSearchedPosts = useMemo( () => {
+    return sortedPosts.filter(posts => posts.title.toLowerCase().includes(searchQuary.toLowerCase()))
+  }, [searchQuary, sortedPosts])
+
+  const createPost = (newPost) => {
+    setPosts([...posts, newPost]);
   };
+
+  const removePost = (postId) => {
+    setPosts(posts.filter(post => post.id !== postId));
+  };
+
+  const sortPosts = (sort) => {
+    setSelectedSort(sort);
+  }
 
   return (
     <div className="App">
-      <div className="form_content">
-        <form className="form_post_create">
-          <Input
-            value={post.title}
-            type="text"
-            placeholder="Post name"
-            onChange={(event) => setPost({ ...post, title: event.target.value })}
-          />
-          <Input
-            value={post.description}
-            type="text"
-            placeholder="Post description"
-            onChange={(event) => setPost({ ...post, description: event.target.value })}
-          />
-        </form>
-
-        <Button onClick={addNewPost}>Create post</Button>
-      </div>
-      <PostList post={posts} title="Publications about Frontend"></PostList>
+      <PostForm create={createPost}></PostForm>
+      <Input
+        value={searchQuary}
+        placeholder={"Поиск"}
+        onChange={e => setSearchQuery(e.target.value)}
+      ></Input>
+      <Select
+        value={selectedSort}
+        onChange={sortPosts}
+        options={[
+          { value: 'title', name: 'По названию' },
+          { value: 'description', name: 'По содержанию' },
+        ]}
+        defaultValue="Сортировка по"
+      />
+      {sortedAndSearchedPosts.length
+      ?
+      <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Публикации про Frontend"></PostList>
+      :
+      <h1 className='main_publication_title'>Постов пока что нету, но вы можете их добавить)</h1>
+      }
     </div>
   );
 }

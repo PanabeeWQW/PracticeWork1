@@ -29,7 +29,7 @@
     margin-top: 20px;
     text-align: center;
     color: var(--black, #252525);
-    font-family: 'Kanit';
+    font-family: 'Raleway';
     font-size: 25px;
     font-style: normal;
     font-weight: 500;
@@ -48,21 +48,24 @@
 
 .post_title {
     color: var(--black, #252525);
-    font-family: 'Kanit';
+    font-family: 'Raleway';
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
     line-height: 100%; /* 20px */
-    text-transform: uppercase;
     margin-bottom: 10px
 }
 
 .post_desciprion {
     color: var(--purple, #6C63FF);
-    font-family: 'Kanit';
+    font-family: 'Raleway';
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
     line-height: 100%; /* 18px */
     text-transform: uppercase;
+}
+
+.select_block {
+    margin-top: 20px;
 }
