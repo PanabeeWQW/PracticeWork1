@@ -3,7 +3,7 @@ import classes from './Input.module.css'
 
 const Input = React.forwardRef((props, ref) => {
     return (
-        <input className={classes.Input} {...props} />
+        <input style={{marginTop: '20px'}} className={classes.Input} {...props} />
     );
 });
 

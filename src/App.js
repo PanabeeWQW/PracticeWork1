@@ -3,6 +3,8 @@ import './styles/App.css';
 import PostList from './Components/PostList';
 import PostForm from './Components/PostForm';
 import PostFilter from './Components/PostFilter';
+import PostCreaterForm from './Components/PostCreaterForm/PostCreaterForm';
+import Button from './Components/UI/button/Button';
 
 function App() {
   const [posts, setPosts] = useState([
@@ -12,6 +14,7 @@ function App() {
   ]);
 
   const [filter, setFilter] = useState({sort: '', query: ''});
+  const [modal, setModal] = useState(false);
 
   const sortedPosts = useMemo(() => {
     console.log('Функция отработала');
@@ -27,6 +30,7 @@ function App() {
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
+    setModal(false)
   };
 
   const removePost = (postId) => {
@@ -35,14 +39,14 @@ function App() {
 
   return (
     <div className="App">
-      <PostForm create={createPost}></PostForm>
+      <Button onClick={() => setModal(true)}>
+        Создать пост
+      </Button>
+      <PostCreaterForm active = {modal} setActive={setModal}>
+        <PostForm create={createPost}></PostForm>
+      </PostCreaterForm>
       <PostFilter filter={filter} setFilter={setFilter}></PostFilter>
-      {sortedAndSearchedPosts.length
-      ?
       <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Публикации про Frontend"></PostList>
-      :
-      <h1 className='main_publication_title'>Постов пока что нету, но вы можете их добавить)</h1>
-      }
     </div>
   );
 }
