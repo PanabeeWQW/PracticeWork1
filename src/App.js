@@ -2,8 +2,7 @@ import React, { useMemo, useState } from 'react';
 import './styles/App.css';
 import PostList from './Components/PostList';
 import PostForm from './Components/PostForm';
-import Select from './Components/UI/select/Select';
-import Input from './Components/UI/input/Input';
+import PostFilter from './Components/PostFilter';
 
 function App() {
   const [posts, setPosts] = useState([
@@ -12,20 +11,19 @@ function App() {
     { id: 3, title: 'а', description: '3' },
   ]);
 
-  const [selectedSort, setSelectedSort] = useState('');
-  const [searchQuary, setSearchQuery] = useState('');
+  const [filter, setFilter] = useState({sort: '', query: ''});
 
   const sortedPosts = useMemo(() => {
     console.log('Функция отработала');
-    if (selectedSort) {
-      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]))
+    if (filter.sort) {
+      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
     }
     return posts;
-  },[selectedSort, posts]);
+  },[filter.sort, posts]);
 
   const sortedAndSearchedPosts = useMemo( () => {
-    return sortedPosts.filter(posts => posts.title.toLowerCase().includes(searchQuary.toLowerCase()))
-  }, [searchQuary, sortedPosts])
+    return sortedPosts.filter(posts => posts.title.toLowerCase().includes(filter.query.toLowerCase()))
+  }, [filter.query, sortedPosts])
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
@@ -35,27 +33,10 @@ function App() {
     setPosts(posts.filter(post => post.id !== postId));
   };
 
-  const sortPosts = (sort) => {
-    setSelectedSort(sort);
-  }
-
   return (
     <div className="App">
       <PostForm create={createPost}></PostForm>
-      <Input
-        value={searchQuary}
-        placeholder={"Поиск"}
-        onChange={e => setSearchQuery(e.target.value)}
-      ></Input>
-      <Select
-        value={selectedSort}
-        onChange={sortPosts}
-        options={[
-          { value: 'title', name: 'По названию' },
-          { value: 'description', name: 'По содержанию' },
-        ]}
-        defaultValue="Сортировка по"
-      />
+      <PostFilter filter={filter} setFilter={setFilter}></PostFilter>
       {sortedAndSearchedPosts.length
       ?
       <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Публикации про Frontend"></PostList>
