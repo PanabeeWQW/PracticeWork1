@@ -25,10 +25,10 @@ const PostForm = ({ create }) => {
           onChange={(event) => setPost({ ...post, title: event.target.value })}
         />
         <Input
-          value={post.description}
+          value={post.body}
           type="text"
           placeholder="Содержание поста"
-          onChange={(event) => setPost({ ...post, description: event.target.value })}
+          onChange={(event) => setPost({ ...post, body: event.target.value })}
         />
         <Button type="submit">Создать пост</Button>
       </form>

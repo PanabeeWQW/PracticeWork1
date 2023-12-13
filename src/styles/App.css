@@ -46,6 +46,10 @@
     border-bottom: solid #6C63FF;
 }
 
+.post_content {
+    width: 80%;
+}
+
 .post_title {
     color: var(--black, #252525);
     font-family: 'Raleway';

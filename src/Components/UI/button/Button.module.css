@@ -3,14 +3,15 @@
 
 .Btn {
     margin-top: 20px;
-    width: auto;
+    margin-left: 10px;
+    width: 200px;
+    height: 50px;
     cursor: pointer;
     padding: 10px;
     border-radius: 5px;
     background: var(--purple, #6C63FF);
     border: none;
     font-family: 'Raleway';
-    font-size: 18px;
     color: var(--white, #F7F7F7);
     font-size: 18px;
     font-style: normal;
